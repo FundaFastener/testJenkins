@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://caption"
+        class="com.company.tjen.web.screens.Screen"
+        messagesPack="com.company.tjen.web.screens">
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <flowBox spacing="true">
+            <label description="msg://desc"
+                   value="msg://helloworld"/>
+            <button caption="msg://clickMe"
+                    invoke="onClickMe"/>
+        </flowBox>
+    </layout>
+</window>
