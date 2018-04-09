@@ -23,9 +23,8 @@ def guiModule = project(':app-gui')
 def webModule = project(':app-web')
 
 def servletApi = 'org.apache.tomcat:tomcat-servlet-api:8.0.26'
-
-
-apply(plugin: 'idea')
+apply(plugin: 'eclipse')
+apply(plugin: 'java')
 apply(plugin: 'cuba')
 
 cuba {
@@ -47,13 +46,13 @@ dependencies {
 
 }
 
-def hsql = 'org.hsqldb:hsqldb:2.2.9'
+def postgres = 'org.postgresql:postgresql:9.4.1212'
 
 configure([globalModule, coreModule, guiModule, webModule]) {
     apply(plugin: 'java')
     apply(plugin: 'maven')
-    apply(plugin: 'idea')
-    apply(plugin: 'cuba')
+    apply(plugin: 'eclipse')
+apply(plugin: 'cuba')
 
     dependencies {
         testCompile('junit:junit:4.12')
@@ -85,8 +84,8 @@ configure(coreModule) {
     dependencies {
         compile(globalModule)
         provided(servletApi)
-        jdbc(hsql)
-        testRuntime(hsql)
+        jdbc(postgres)
+        testRuntime(postgres)
 
     }
 
@@ -107,19 +106,19 @@ configure(coreModule) {
     }
 
     task createDb(dependsOn: assembleDbScripts, description: 'Creates local database', type: CubaDbCreation) {
-        dbms = 'hsql'
+        dbms = 'postgres'
         host = 'localhost'
         dbName = 'tjen'
-        dbUser = 'sa'
-        dbPassword = ''
+        dbUser = 'funda_dev'
+        dbPassword = 'funda'
     }
 
     task updateDb(dependsOn: assembleDbScripts, description: 'Updates local database', type: CubaDbUpdate) {
-        dbms = 'hsql'
+        dbms = 'postgres'
         host = 'localhost'
         dbName = 'tjen'
-        dbUser = 'sa'
-        dbPassword = ''
+        dbUser = 'funda_dev'
+        dbPassword = 'funda'
     }
 }
 
@@ -211,3 +210,13 @@ task wrapper(type: Wrapper) {
 }
 
 apply from: 'extra.gradle'
+
+task buildWar(type: CubaWarBuilding) {
+    includeJdbcDriver = true
+    coreContextXmlPath = 'modules/core/web/META-INF/war-context.xml'
+    includeContextXml = true
+    appProperties = ['cuba.automaticDatabaseUpdate' : true,
+    'cuba.connectionUrlList' : 'http://localhost:8180/app-core']
+    singleWar = false
+    appHome = '${app.home}'
+}
