@@ -11,6 +11,7 @@
                    value="msg://helloworld"/>
             <button caption="msg://clickMe"
                     invoke="onClickMe"/>
+            <dateField/>
         </flowBox>
     </layout>
 </window>
