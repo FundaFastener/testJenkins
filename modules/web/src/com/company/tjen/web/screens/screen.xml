@@ -12,6 +12,7 @@
             <button caption="msg://clickMe"
                     invoke="onClickMe"/>
             <dateField/>
+            <colorPicker buttonCaption="msg://colorPicker"/>
         </flowBox>
     </layout>
 </window>
