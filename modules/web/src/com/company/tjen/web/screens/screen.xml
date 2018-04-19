@@ -6,6 +6,7 @@
     <dialogMode height="600"
                 width="800"/>
     <layout>
+        <calendar/>
         <flowBox spacing="true">
             <label description="msg://desc"
                    value="msg://helloworld"/>
